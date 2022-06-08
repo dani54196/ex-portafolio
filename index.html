@@ -29,6 +29,37 @@
     />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
+    <!-- Mail Services -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+    ></script>
+    <script type="text/javascript">
+      (function () {
+        // https://dashboard.emailjs.com/admin/account
+        emailjs.init(user_tdRNXJZEsIE4IPNcYqo2Y);
+      })();
+    </script>
+    <script type="text/javascript">
+      window.onload = function () {
+        document
+          .getElementById("contact-form")
+          .addEventListener("submit", function (event) {
+            event.preventDefault();
+            // generate a five digit number for the contact_number variable
+            this.contact_number.value = (Math.random() * 100000) | 0;
+            // these IDs from the previous steps
+            emailjs.sendForm("contact_service", "contact_form", this).then(
+              function () {
+                console.log("SUCCESS!");
+              },
+              function (error) {
+                console.log("FAILED...", error);
+              }
+            );
+          });
+      };
+    </script>
   </head>
   <body id="page-top">
     <!-- Navigation-->
@@ -80,14 +111,10 @@
       </div>
     </nav>
     <!-- Masthead-->
-    <header class="masthead bg-primary text-white text-center">
+    <header class="masthead bg-dark text-white text-center">
       <div class="container d-flex align-items-center flex-column">
         <!-- Masthead Avatar Image-->
-        <img
-          class="masthead-avatar mb-5"
-          src="assets/img/avataaars.svg"
-          alt=""
-        />
+        <img class="masthead-avatar mb-5" src="assets/img/code.png" alt="" />
         <!-- Masthead Heading-->
         <h1 class="masthead-heading text-uppercase mb-0">Daniel Cardozo</h1>
         <!-- Icon Divider-->
@@ -98,7 +125,7 @@
         </div>
         <!-- Masthead Subheading-->
         <p class="masthead-subheading font-weight-light mb-0">
-          Backend Node Developer - Consultant
+          Backend Developer - Operations
         </p>
       </div>
     </header>
@@ -261,7 +288,7 @@
       </div>
     </section>
     <!-- About Section-->
-    <section class="page-section bg-primary text-white mb-0" id="about">
+    <section class="page-section bg-dark text-white mb-0" id="about">
       <div class="container">
         <!-- About Section Heading-->
         <h2 class="page-section-heading text-center text-uppercase text-white">
@@ -277,17 +304,19 @@
         <div class="row">
           <div class="col-lg-4 ml-auto">
             <p class="lead">
-              Freelancer is a free bootstrap theme created by Start Bootstrap.
-              The download includes the complete source files including HTML,
-              CSS, and JavaScript as well as optional SASS stylesheets for easy
-              customization.
+              I'm a <b>Computer Science</b> student at the Universidad de Buenos
+              Aires Pasion for the technology, curiosity and desire to learn new
+              things. With knowledge in software design, deploy applications
+              maintainable, scalable and understandable code, following good
+              practices
             </p>
           </div>
           <div class="col-lg-4 mr-auto">
             <p class="lead">
-              You can create your own custom avatar for the masthead, change the
-              icon in the dividers, and add your email address to the contact
-              form to make it fully functional!
+              Backend Node developer, using Typescript, MySQL MongoDB, with
+              documented and testing code.<br />
+              Deploy with docker, using cloud technologies like AWS and Digital
+              Ocean
             </p>
           </div>
         </div>
@@ -298,7 +327,7 @@
             href="https://startbootstrap.com/themes/freelancer/"
           >
             <i class="fas fa-download mr-2"></i>
-            Free Download!
+            My CV
           </a>
         </div>
       </div>
@@ -322,16 +351,22 @@
         <div class="row">
           <div class="col-lg-8 mx-auto">
             <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
-            <form id="contactForm" name="sentMessage" novalidate="novalidate">
+            <form
+              id="contactForm contact-form"
+              name="sentMessage"
+              novalidate="novalidate"
+            >
               <div class="control-group">
                 <div
                   class="form-group floating-label-form-group controls mb-0 pb-2"
                 >
+                  <input type="hidden" name="contact_number" />
                   <label>Name</label>
                   <input
                     class="form-control"
                     id="name"
                     type="text"
+                    name="user_name"
                     placeholder="Name"
                     required="required"
                     data-validation-required-message="Please enter your name."
@@ -348,25 +383,10 @@
                     class="form-control"
                     id="email"
                     type="email"
+                    name="user_email"
                     placeholder="Email Address"
                     required="required"
                     data-validation-required-message="Please enter your email address."
-                  />
-                  <p class="help-block text-danger"></p>
-                </div>
-              </div>
-              <div class="control-group">
-                <div
-                  class="form-group floating-label-form-group controls mb-0 pb-2"
-                >
-                  <label>Phone Number</label>
-                  <input
-                    class="form-control"
-                    id="phone"
-                    type="tel"
-                    placeholder="Phone Number"
-                    required="required"
-                    data-validation-required-message="Please enter your phone number."
                   />
                   <p class="help-block text-danger"></p>
                 </div>
@@ -380,6 +400,7 @@
                     class="form-control"
                     id="message"
                     rows="5"
+                    name="message"
                     placeholder="Message"
                     required="required"
                     data-validation-required-message="Please enter a message."
@@ -390,13 +411,14 @@
               <br />
               <div id="success"></div>
               <div class="form-group">
-                <button
+                <input
                   class="btn btn-primary btn-xl"
                   id="sendMessageButton"
                   type="submit"
+                  value="Send"
                 >
-                  Send
-                </button>
+                  
+                </input>
               </div>
             </form>
           </div>
@@ -445,7 +467,7 @@
             <h4 class="text-uppercase mb-4">Curriculum Vitae</h4>
             <p class="lead mb-0">
               You can download my cv here:
-              
+
               <a href="http://startbootstrap.com">Link</a>
               .
             </p>
